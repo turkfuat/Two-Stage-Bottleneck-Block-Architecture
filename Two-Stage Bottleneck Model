@@ -104,18 +104,18 @@ def _model2021(X, image_z, image_width, image_height, image_channel, phase, drop
     
     layer1 = squeeze_excitation_model(layer1, out_dim=16, scope='sem1')
     layer1 = resnet_Add(x1=layer0, x2=layer1)
-    # down sampling1
+   
     down1 = down_sampling(x=layer1, kernal=(3, 3, 3, 16, 32), phase=phase, drop=drop, scope='down1')
-    # layer2->convolution
+
     layer2 = conv_bn_relu_drop(x=down1, kernal=(3, 3, 3, 32, 32), phase=phase, drop=drop,
                                scope='layer2_1')
     layer2 = conv_bn_relu_drop(x=layer2, kernal=(3, 3, 3, 32, 32), phase=phase, drop=drop,
                                scope='layer2_2')
     layer2 = squeeze_excitation_model(layer2, out_dim=32, scope='sem2')
     layer2 = resnet_Add(x1=down1, x2=layer2)
-    # down sampling2
+   
     down2 = down_sampling(x=layer2, kernal=(3, 3, 3, 32, 64), phase=phase, drop=drop, scope='down2')
-    # layer3->convolution
+  
     layer3 = conv_bn_relu_drop(x=down2, kernal=(3, 3, 3, 64, 64), phase=phase, drop=drop,
                                scope='layer3_1')
     layer3 = conv_bn_relu_drop(x=layer3, kernal=(3, 3, 3, 64, 64), phase=phase, drop=drop,
@@ -124,9 +124,9 @@ def _model2021(X, image_z, image_width, image_height, image_channel, phase, drop
                                scope='layer3_3')
     layer3 = squeeze_excitation_model(layer3, out_dim=64, scope='sem3')
     layer3 = resnet_Add(x1=down2, x2=layer3)
-    # down sampling3
+  
     down3 = down_sampling(x=layer3, kernal=(3, 3, 3, 64, 128), phase=phase, drop=drop, scope='down3')
-    # layer4->convolution
+    
     layer4 = conv_bn_relu_drop(x=down3, kernal=(3, 3, 3, 128, 128), phase=phase, drop=drop,
                                scope='layer4_1')
     layer4 = conv_bn_relu_drop(x=layer4, kernal=(3, 3, 3, 128, 128), phase=phase, drop=drop,
@@ -136,9 +136,9 @@ def _model2021(X, image_z, image_width, image_height, image_channel, phase, drop
     
     layer4 = squeeze_excitation_model(layer4, out_dim=128, scope='sem4')
     layer4 = resnet_Add(x1=down3, x2=layer4)
-    # down sampling4
+   
     down4 = down_sampling(x=layer4, kernal=(3, 3, 3, 128, 256), phase=phase, drop=drop, scope='down4')
-    # layer5->convolution
+ 
     layer5 = conv_bn_relu_drop(x=down4, kernal=(3, 3, 3, 256, 256), phase=phase, drop=drop,
                                scope='layer5_1')
     layer5 = conv_bn_relu_drop(x=layer5, kernal=(3, 3, 3, 256, 256), phase=phase, drop=drop,
@@ -225,3 +225,4 @@ def _model2021(X, image_z, image_width, image_height, image_channel, phase, drop
     output_map = conv_sigmod(x=layer9, kernal=(1, 1, 1, 16, n_class), scope='output')
     
     return  output_map
+
